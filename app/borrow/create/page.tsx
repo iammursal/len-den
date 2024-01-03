@@ -10,7 +10,7 @@ export default function BorrowCreatePage() {
 	return (
 		<>
 			{/* start:Create Form */}
-			<section className="py-8 px-4">
+			<section className="p-4">
 				<TransactionMutateForm type='debit'/>
 			</section>
 			{/* start:Create Form */}

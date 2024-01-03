@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export function RecentTransactionsSection({}) {
 	const { transactions } = useTransactionStore()
-	console.log({ transactions })
+
 	return (
 		<section className="py-16 px-4">
 			<div className="mb-6 flex justify-between">
