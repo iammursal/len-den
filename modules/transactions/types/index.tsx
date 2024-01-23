@@ -7,3 +7,13 @@ export type TransactionModel = {
 	type: 'credit' | 'debit'
 	notes?: string
 }
+
+export type TransactionStore = {
+	transactions: TransactionModel[]
+	totalExpense: number
+	totalIncome: number
+	totalBalance: number
+	addTransaction: (money: {}) => {}
+	removeTransaction: (money: {}) => {}
+	clearAllTransaction: () => {}
+}

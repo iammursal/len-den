@@ -12,6 +12,10 @@ import {
 	GiReceiveMoney,
 	GiTakeMyMoney,
 } from 'react-icons/gi'
+import { FaRegUser, FaUser } from 'react-icons/fa'
+import { IoIosSettings } from "react-icons/io";
+import { AiFillHome } from "react-icons/ai";
+
 
 interface HeaderProps {}
 
@@ -22,7 +26,7 @@ const Header: FC<HeaderProps> = ({}) => {
 	const links = [
 		{
 			href: '/',
-			icon: <RiHome2Line className="w-6 h-6" />,
+			icon: <AiFillHome className="w-5 h-5" />,
 			title: 'Home',
 		},
 		{
@@ -41,8 +45,13 @@ const Header: FC<HeaderProps> = ({}) => {
 			title: 'Transactions',
 		},
 		{
+			href: '/users',
+			icon: <FaUser className="w-5 h-5" />,
+			title: 'User',
+		},
+		{
 			href: '/settings',
-			icon: <RiSettings2Line className="w-6 h-6" />,
+			icon: <IoIosSettings className="w-6 h-6" />,
 			title: 'Settings',
 		},
 	]
@@ -61,7 +70,7 @@ const Header: FC<HeaderProps> = ({}) => {
 					{/* sidbar menu button */}
 					<button
 						onClick={() => setSidebarOpen((s) => !s)}
-						className="lg:hidden h-full w-10 flex ps-1 items-center"
+						className="lg:hidden h-full w-14 flex ps-4 items-center"
 					>
 						<RxHamburgerMenu size="20px" />
 					</button>

@@ -2,26 +2,103 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer base {
+	:root {
+		--background: 240 2% 96%;
+		--foreground: 0 0% 22%;
+
+		--card: 240 2% 96%;
+		--card-foreground: 0 0% 22%;
+
+		--popover: 240 2% 96%;
+		--popover-foreground: 0 0% 22%;
+
+		--primary: 220 16% 34%;
+		--primary-foreground: 0 0% 98%;
+
+		--secondary: 200 16% 44%;
+		--secondary-foreground: 0 0% 22%;
+
+		--muted: 200 16% 44%;
+		--muted-foreground: 0 0% 22%;
+
+		--accent: 200 16% 44%;
+		--accent-foreground: 0 0% 22%;
+
+		--destructive: 0 80% 50%; /* Adjusted for more vibrancy */
+		--destructive-foreground: 0 0% 98%;
+
+		--warning: 40 90% 50%;
+		--warning-foreground: 0 0% 22%;
+
+        --success: 150 70% 50%; /* Adjusted for more vibrancy */
+        --success-foreground: 0 0% 98%;
+
+		--border: 220 16% 80%;
+		--input: 220 16% 80%;
+		--ring: 240 2% 96%;
+
+		--radius: 0.5rem;
+	}
+
+	.dark {
+		--background: 0 0% 22%;
+		--foreground: 0 0% 98%;
+
+		--card: 0 0% 22%;
+		--card-foreground: 0 0% 98%;
+
+		--popover: 0 0% 22%;
+		--popover-foreground: 0 0% 98%;
+
+		--primary: 0 0% 98%;
+		--primary-foreground: 240 2% 96%;
+
+		--secondary: 30 25% 10%;
+		--secondary-foreground: 0 0% 98%;
+
+		--muted: 30 25% 10%;
+		--muted-foreground: 0 0% 98%;
+
+		--accent: 30 25% 10%;
+		--accent-foreground: 0 0% 98%;
+
+		--destructive: 0 80% 50%; /* Adjusted for more vibrancy */
+		--destructive-foreground: 0 0% 98%;
+
+		--warning: 40 90% 50%;
+		--warning-foreground: 240 2% 96%;
+
+        --success: 150 70% 50%; /* Adjusted for more vibrancy */
+        --success-foreground: 0 0% 98%;
+
+		--border: 30 25% 10%;
+		--input: 30 25% 10%;
+		--ring: 200 10% 80%;
+	}
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
 }
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	color: rgb(0, 0, 0);
+	background: linear-gradient(
+			to bottom,
+			transparent,
+			rgb(214, 219, 220)
+		)
+		rgb(255, 255, 255);
+}
+@media (prefers-color-scheme: dark) {
+	body {
+		color: rgb(255, 255, 255);
+		background: linear-gradient(to bottom, transparent, rgb(0, 0, 0))
+			rgb(0, 0, 0);
+	}
 }
