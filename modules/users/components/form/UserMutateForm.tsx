@@ -22,9 +22,10 @@ type UserMutateFormProps = {
 	id?: string
 }
 export function UserMutateForm({ id }: UserMutateFormProps) {
-	const { users } = useUserStore()
+	const users = useUserStore((s) => s.users)
+	const addUser = useUserStore((s) => s.addUser)
+	const updateUser = useUserStore((s) => s.updateUser)
 	const router = useRouter()
-	const { addUser, updateUser } = useUserStore()
 	const user = users?.find((u) => u.id === id)
 
 	const form = useForm<z.infer<typeof FormSchema>>({
@@ -34,7 +35,6 @@ export function UserMutateForm({ id }: UserMutateFormProps) {
 
 	function handleCreateUser(user: Partial<UserModel>) {
 		addUser({
-			id: crypto.randomUUID(),
 			...user,
 		})
 		return {
@@ -45,7 +45,7 @@ export function UserMutateForm({ id }: UserMutateFormProps) {
 
 	function handleUpdateUser(user: Partial<UserModel>) {
 		updateUser({
-            id,
+			id,
 			...user,
 		})
 
@@ -62,10 +62,10 @@ export function UserMutateForm({ id }: UserMutateFormProps) {
 		if (result?.success) {
 			toast('Success', {
 				description: result.message,
-                type: 'success',
+				type: 'success',
 				action: {
 					label: 'Ok',
-					onClick: () => console.log('Undo'),
+					onClick: () => {},
 				},
 			})
 			router.push('/users')
@@ -80,7 +80,7 @@ export function UserMutateForm({ id }: UserMutateFormProps) {
 			>
 				<Field
 					name="name"
-					type="number"
+					type="text"
 					label="Name"
 					placeholder="Enter the user's full name"
 					min={1}

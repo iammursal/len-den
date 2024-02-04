@@ -34,8 +34,11 @@ export const columns: ColumnDef<UserModel>[] = [
 	//   header: "Phone",
 	// },
 	{
-		accessorKey: 'amount',
-		header: 'Amount',
+		accessorKey: 'phone',
+		header: 'Phone',
+		cell: (info: any) => (
+			<a href="tel:{info.getValue()}" className='link'>{info.getValue()}</a>
+		),
 	},
 	{
 		accessorKey: 'action',

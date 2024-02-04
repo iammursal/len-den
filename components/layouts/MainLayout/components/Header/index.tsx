@@ -1,20 +1,18 @@
 'use client'
 
+import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState, type FC } from 'react'
-import { RxHamburgerMenu } from 'react-icons/rx'
-import { RiHome2Line, RiSettings2Line } from 'react-icons/ri'
-import clsx from 'clsx'
-import { useSwipeable } from 'react-swipeable'
+import { AiFillHome } from "react-icons/ai"
+import { FaUser } from 'react-icons/fa'
 import {
-	GiPayMoney,
-	GiReceiveMoney,
-	GiTakeMyMoney,
+    GiPayMoney,
+    GiReceiveMoney,
+    GiTakeMyMoney,
 } from 'react-icons/gi'
-import { FaRegUser, FaUser } from 'react-icons/fa'
-import { IoIosSettings } from "react-icons/io";
-import { AiFillHome } from "react-icons/ai";
+import { IoIosSettings } from "react-icons/io"
+import { RxHamburgerMenu } from 'react-icons/rx'
 
 
 interface HeaderProps {}
@@ -65,7 +63,7 @@ const Header: FC<HeaderProps> = ({}) => {
 
 	return (
 		<>
-			<div className="z-10 max-w-5xl w-full justify-between font-mono text-md lg:flex h-20 ">
+			<div className="z-30 relative max-w-5xl w-full  font-mono text-md lg:flex h-20 ">
 				<div className="fixed left-0 top-0 h-16 flex align-middle w-full justify-start border-b border-gray-300 bg-gradient-to-b from-zinc-200  backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
 					{/* sidbar menu button */}
 					<button
@@ -84,7 +82,7 @@ const Header: FC<HeaderProps> = ({}) => {
 			<div
 				onClick={() => setSidebarOpen(false)}
 				className={clsx({
-					'fixed bottom-0 h-screen transition-all lg:static z-20 w-full':
+					'fixed bottom-0 h-screen transition-all lg:static z-40 w-full':
 						true,
 					'bg-slate-900/80': sidebarOpen,
 					'pointer-events-none ': !sidebarOpen,

@@ -1,6 +1,6 @@
 export type TransactionModel = {
 	id: string
-	name: string
+    user_id: string
 	amount: number
 	borrowed_at: string
 	// category: string
@@ -13,7 +13,9 @@ export type TransactionStore = {
 	totalExpense: number
 	totalIncome: number
 	totalBalance: number
-	addTransaction: (money: {}) => {}
-	removeTransaction: (money: {}) => {}
-	clearAllTransaction: () => {}
+    getTransactions: (t: Partial<TransactionStore>) => TransactionModel[] | []
+	addTransaction: (t: Omit<TransactionStore, 'id'>) => TransactionModel
+    updateTransaction: (t: Partial<TransactionStore>) => TransactionModel
+	removeTransaction: (id:string) => Boolean
+	clearAllTransaction: () => Boolean
 }

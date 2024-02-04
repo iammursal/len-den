@@ -95,6 +95,9 @@ body {
 		)
 		rgb(255, 255, 255);
 }
+.link{
+    @apply text-accent-foreground hover:text-accent-foreground
+}
 @media (prefers-color-scheme: dark) {
 	body {
 		color: rgb(255, 255, 255);

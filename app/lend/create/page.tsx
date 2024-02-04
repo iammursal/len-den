@@ -1,4 +1,4 @@
-import { TransactionMutateForm } from '@/modules/transactions/components/MutateForm'
+import { TransactionMutateForm } from '@/modules/transactions/components/form/MutateForm'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -8,12 +8,10 @@ export const metadata: Metadata = {
 
 export default function BorrowCreatePage() {
 	return (
-		<>
+		<div className="container" >
 			{/* start:Create Form */}
-			<section className="py-8 px-4">
 				<TransactionMutateForm type='credit'/>
-			</section>
 			{/* start:Create Form */}
-		</>
+		</div>
 	)
 }

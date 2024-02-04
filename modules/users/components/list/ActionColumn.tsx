@@ -17,7 +17,7 @@ interface ActionColumnProps {
 
 export function ActionColumn({ userId }: ActionColumnProps) {
 	const router = useRouter()
-	const { removeUser } = useUserStore()
+	const  removeUser = useUserStore(s => s.removeUser)
 	const handleUserDelete = () => {
 		removeUser(userId)
 		toast('User Deleted', {

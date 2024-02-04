@@ -1,4 +1,3 @@
-import { Container } from '@/components/container'
 import { UserMutateForm } from '@/modules/users/components/form'
 import type { Metadata } from 'next'
 
@@ -9,11 +8,11 @@ export const metadata: Metadata = {
 
 export default function UserCreate() {
 	return (
-		<Container>
-			<>
+		<div className="container" >
+			<div>
 				{/* <Title.h1>Add User</Title.h1> */}
 				<UserMutateForm />
-			</>
-		</Container>
+			</div>
+		</div>
 	)
 }

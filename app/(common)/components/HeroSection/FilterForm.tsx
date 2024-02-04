@@ -6,72 +6,86 @@ import * as z from 'zod'
 
 import Field from '@/components/form/Field'
 import { Button } from '@/components/ui/button'
-import {
-    Form
-} from '@/components/ui/form'
+import { DialogTrigger } from '@/components/ui/dialog'
+import { Form } from '@/components/ui/form'
 import { useUserStore } from '@/modules/users/stores'
-import { toast } from 'sonner'
+import { useSearchParams } from 'next/navigation'
+import { useHandleFormReset, useHandleFormSubmit } from './hooks'
+import { FormSchema } from './schema'
 
-// const users = [
-// 	{ label: 'English', value: 'en' },
-// 	{ label: 'French', value: 'fr' },
-// 	{ label: 'German', value: 'de' },
-// 	{ label: 'Spanish', value: 'es' },
-// 	{ label: 'Portuguese', value: 'pt' },
-// 	{ label: 'Russian', value: 'ru' },
-// 	{ label: 'Japanese', value: 'ja' },
-// 	{ label: 'Korean', value: 'ko' },
-// 	{ label: 'Chinese', value: 'zh' },
-// ] as any
-
-const FormSchema = z.object({
-	user: z.string({
-		required_error: 'Please select a user.',
-	}),
-})
+const isSettledOptions = [
+	{ label: 'All', value: '-1' },
+	{ label: 'Settled', value: '1' },
+	{ label: 'Unsettled', value: '0' },
+]
 
 export function FilterForm() {
-	const { users } = useUserStore()
+	const searchParams = useSearchParams()
+	const users = useUserStore((s) => s.users)
+	const handleSubmit = useHandleFormSubmit()
 	const form = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
+		defaultValues: {
+			is_settled: searchParams?.get('is_settled') || '-1',
+			user_id: searchParams?.get('user_id') || '',
+			data_from: searchParams?.get('data_from') || '',
+			data_to: searchParams?.get('data_to') || '',
+		},
 	})
+	const handleReset = useHandleFormReset(form)
 
 	let usersOptions = users?.map((user) => {
 		return { label: user.name, value: user.id }
 	})
 
-	function onSubmit(data: z.infer<typeof FormSchema>) {
-		toast({
-			title: 'You submitted the following values:',
-			description: (
-				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-					<code className="text-white">
-						{JSON.stringify(data, null, 2)}
-					</code>
-				</pre>
-			),
-		})
-	}
-
 	return (
 		<Form {...form}>
 			<form
-				onSubmit={form.handleSubmit(onSubmit)}
+				onSubmit={form.handleSubmit(handleSubmit)}
 				className="space-y-6"
 			>
 				<Field
-					control={form?.control}
+					form={form}
+					label="Is Settled"
+					type="select"
+					name="is_settled"
+					required
+					options={isSettledOptions}
+				/>
+				<Field
 					form={form}
 					label="User"
 					type="select"
-					name="user"
+					name="user_id"
 					placeholder="Select a user"
 					options={usersOptions}
 					isSearchable={true}
 				/>
-				<Button type="submit" variant={'success'}>
-					Submit
-				</Button>
+				<Field
+					form={form}
+					label="Date from"
+					type="date"
+					name="data_from"
+				/>
+				<Field
+					form={form}
+					label="Date to"
+					type="date"
+					name="data_to"
+				/>
+
+				<DialogTrigger className="w-full flex gap-4">
+					<Button type="submit" variant="success">
+						Submit
+					</Button>
+					<Button
+						type="button"
+						onClick={handleReset}
+						variant="destructive"
+					>
+						Reset
+					</Button>
+				</DialogTrigger>
 			</form>
 		</Form>
 	)

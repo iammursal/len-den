@@ -26,9 +26,11 @@ export function TransactionMutateForm({
 }) {
 	const [fieldErrors, setFieldErrors] = useState({}) as any
 	const router = useRouter()
-	const { addTransaction, clearAllTransaction } =
-		useTransactionStore()
-	const { users } = useUserStore()
+	const addTransaction = useTransactionStore((s) => s.addTransaction)
+	const clearAllTransaction = useTransactionStore(
+		(s) => s.clearAllTransaction
+	)
+	const  users  = useUserStore(s => s.users)
 
 	let usersOptions = users?.map((user) => {
 		return { label: user.name, value: user.id }
@@ -48,19 +50,11 @@ export function TransactionMutateForm({
 
 	function onSubmit(data: z.infer<typeof FormSchema>) {
 		addTransaction({
-			id: crypto.randomUUID(),
 			type,
 			...data,
 		})
-		toast({
-			title: 'You submitted the following values:',
-			description: (
-				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-					<code className="text-white">
-						{JSON.stringify(data, null, 2)}
-					</code>
-				</pre>
-			),
+		toast('Success', {
+			description: 'Transaction added successfully',
 		})
 		router.push('/')
 	}
@@ -69,7 +63,7 @@ export function TransactionMutateForm({
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="w-2/3 space-y-6"
+				className="w-full space-y-6"
 			>
 				<Field
 					name="amount"
@@ -78,7 +72,7 @@ export function TransactionMutateForm({
 					placeholder="Enter the amount you borrowed"
 					min={1}
 					error={fieldErrors?.amount}
-					control={form.control}
+					form={form}
 					required
 				/>
 				<Field
@@ -88,6 +82,7 @@ export function TransactionMutateForm({
 					placeholder="Select the lender"
 					options={usersOptions}
 					isSearchable={true}
+					form={form}
 					required
 				/>
 				<Field
@@ -96,7 +91,7 @@ export function TransactionMutateForm({
 					label="Borrowed At"
 					placeholder="Enter person lender borrowed_at"
 					defaultValue={new Date().toISOString().substr(0, 16)}
-					error={fieldErrors?.borrowed_at}
+					form={form}
 					required
 				/>
 
@@ -105,7 +100,7 @@ export function TransactionMutateForm({
 					type="textarea"
 					label="Notes"
 					placeholder="Enter the notes"
-					error={fieldErrors?.notes}
+					form={form}
 				/>
 
 				<Button

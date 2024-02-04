@@ -1,13 +1,11 @@
 'use client'
 
-import TransactionListItem from '@/modules/transactions/components/ListItem/TransactionListItem'
-import { useTransactionStore } from '@/modules/transactions/stores'
-import clsx from 'clsx'
+import TransactionList from '@/modules/transactions/components/list/TransactionList'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 
 export function RecentTransactionsSection({}) {
-	const { transactions } = useTransactionStore()
-
+	let searchParams = useSearchParams()
 	return (
 		<section className="py-16 px-4">
 			<div className="mb-6 flex justify-between">
@@ -18,9 +16,9 @@ export function RecentTransactionsSection({}) {
 			</div>
 			{/* list */}
 			<div className="flex flex-col gap-y-4 divide-y divide-gray-500 ">
-				{transactions.map((t) => (
-					<TransactionListItem key={t.id} transaction={t} />
-				))}
+				<TransactionList
+					user_id={searchParams?.get('user_id') || ''}
+				/>
 			</div>
 		</section>
 	)

@@ -1,11 +1,11 @@
-export const applyMiddlewares = (f: any, middlewares: any[]) => {
+export const applyMiddlewares = (state: any, middlewares: any[]) => {
 	return middlewares.reduce((accumulator, middlewares) => {
 		if (middlewares) {
 			if (Array.isArray(middlewares))
 				return middlewares[0](accumulator, middlewares[1])
 			return middlewares(accumulator)
 		}
-	}, f)
+	}, state)
 }
 
 export * from './persist'

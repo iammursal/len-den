@@ -11,34 +11,42 @@ import {
 import { useTransactionStore } from '@/modules/transactions/stores'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 import { FaFilter } from 'react-icons/fa'
 import { GiPayMoney, GiReceiveMoney } from 'react-icons/gi'
 import { FilterForm } from './FilterForm'
 
 export function HeroSection() {
-	const [filterModalShow, setFilterModalShow] = useState(false)
-	const {
-		totalBalance,
-		totalExpense,
-		totalIncome,
-		clearAllTransaction,
-	} = useTransactionStore()
+	const searchParams = useSearchParams()
+	// const clearAllTransaction = useTransactionStore(
+	// 	(s) => s.clearAllTransaction
+	// )
+	let transactions = useTransactionStore((s) => s.transactions)
+	let getTransactions = useTransactionStore((s) => s.getTransactions)
+	useEffect(() => {
+		const userId = searchParams.get('user_id') as string
+		if (userId) {
+			transactions = getTransactions({ id: userId })
+		}
+	}, [searchParams.get('user_id')])
+	const totalExpense = useTransactionStore((s) => s.totalExpense)
+	const totalIncome = useTransactionStore((s) => s.totalIncome)
+	const totalBalance = useTransactionStore((s) => s.totalBalance)
 
 	return (
 		<section className="p-8 ">
 			{/* start:: Filters */}
 			<Dialog>
-				<DialogTrigger className="fixed top-20 right-6 rounded-md bg-white/20 w-8 h-8 grid place-content-center">
+				<DialogTrigger className="fixed top-20 right-6 rounded-md bg-white/10 w-8 h-8 grid place-content-center">
 					<FaFilter />
 				</DialogTrigger>
-				<DialogContent>
+				<DialogContent className='w-full max-w-[calc(100vw-2rem)] lg:max-w-7xl'>
 					<DialogHeader>
 						<DialogTitle>FILTER</DialogTitle>
-						<DialogDescription >
-						</DialogDescription>
+						<DialogDescription></DialogDescription>
 					</DialogHeader>
-                    <FilterForm />
+					<FilterForm />
 				</DialogContent>
 			</Dialog>
 			{/* end:: Filters */}
@@ -85,12 +93,14 @@ export function HeroSection() {
 					</span>
 				</Link>
 			</div>
-			<button
-				className="m-4 text-center px-4 py-2 border-2 border-white"
-				onClick={() => clearAllTransaction()}
-			>
-				Clear Transactions
-			</button>
+			{/* <div className="flex justify-center pt-4">
+				<button
+					className="m-4 text-center px-4 py-2 border-2 border-white"
+					onClick={() => clearAllTransaction()}
+				>
+					Clear Transactions
+				</button>
+			</div> */}
 		</section>
 	)
 }

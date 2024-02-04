@@ -7,8 +7,8 @@ export const metadata: Metadata = {
 export default function SettingsPage() {
 	// return <></>
 	return (
-		<section className="p-4">
+		<div className='container'>
             settings
-		</section>
+		</div>
 	)
 }

@@ -14,15 +14,16 @@ export type UserStore = {
 const defaultStoreData = {
 	users: [],
 }
-;
-
 const useUserStore = create<UserStore>(
 	applyMiddlewares(
 		(set: any) => ({
 			...defaultStoreData,
-			addUser: (user: UserModel) => {
+			addUser: (user: Omit<UserModel, 'id'>) => {
 				set((state: UserStore) => {
-					state.users.push(user)
+					state.users.unshift({
+						id: crypto.randomUUID(),
+						...user,
+					})
 				})
 			},
 			updateUser: (user: UserModel) => {
@@ -32,7 +33,7 @@ const useUserStore = create<UserStore>(
 							? {
 									...u,
 									...user,
-                                    id: u.id
+									id: u.id,
 							  }
 							: u
 					)
