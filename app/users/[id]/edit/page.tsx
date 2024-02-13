@@ -1,19 +1,25 @@
-import { UserMutateForm } from '@/modules/users/components/form'
 import type { Metadata } from 'next'
+import { UserEditForm } from './(common)/components/UserEditForm'
 
 export const metadata: Metadata = {
-	title: 'Edit User | Len Den',
+	title: 'Edit User',
 	//   description: '...',
 }
 
-export default function UserEdit({ params }: { params: { id: string } }) {
-    const { id } = params
+export default function UserEditPage() {
 	return (
-		<div className="container" >
+		<div className="container">
 			<div>
 				{/* <Title.h1>Add User</Title.h1> */}
-				<UserMutateForm id={id}/>
+				<UserEditForm />
 			</div>
 		</div>
 	)
+}
+
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+	return [{
+        id: '1'
+    }]
 }

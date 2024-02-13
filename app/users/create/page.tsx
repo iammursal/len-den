@@ -2,17 +2,14 @@ import { UserMutateForm } from '@/modules/users/components/form'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-	title: 'Add User | Len Den',
+	title: 'Add User',
 	//   description: '...',
 }
 
-export default function UserCreate() {
+export default function UserCreatePage() {
 	return (
-		<div className="container" >
-			<div>
-				{/* <Title.h1>Add User</Title.h1> */}
-				<UserMutateForm />
-			</div>
+		<div className="container">
+			<UserMutateForm />
 		</div>
 	)
 }

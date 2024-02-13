@@ -1,7 +1,7 @@
 import { FormField } from '@/components/ui/form'
 import type { FC } from 'react'
-import { FieldType } from './FieldType'
-import { FieldProps } from './types'
+import { FieldType } from './FieldType.comp'
+import { FieldProps } from './types.model'
 
 const Field: FC<Omit<FieldProps, 'renderProps'>> = (props) => {
 	const {

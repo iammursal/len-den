@@ -3,12 +3,10 @@ import { Layer } from '@/components/ui/layer'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { FaUserPlus } from 'react-icons/fa'
-import {
-    UserListAll,
-} from './(common)/components/UserList/UserList'
+import { UserListFilter } from './(common)/components/UserListFilter'
 
 export const metadata: Metadata = {
-	title: 'Users | Len Den',
+	title: 'Users',
 	//   description: '...',
 }
 
@@ -16,7 +14,7 @@ export default function UsersPage() {
 	// return <></>
 	return (
 		<section className="p-4">
-			<UserListAll />
+			<UserListFilter />
 			{/* hover action button */}
 			<Layer index={5}>
 				<span className="w-1/5 mb-4 float-right  mt-[calc(100vh_-_7rem)]">

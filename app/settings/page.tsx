@@ -1,7 +1,7 @@
 
 import type { Metadata } from 'next'
 export const metadata: Metadata = {
-	title: 'Settings | Len Den',
+	title: 'Settings',
 	//   description: '...',
 }
 export default function SettingsPage() {

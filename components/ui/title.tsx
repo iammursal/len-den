@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { cva } from 'class-variance-authority'
 
-interface TitleProps {
+type TitleProps = {
 	children: React.ReactNode
 	className?: string
 	variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'

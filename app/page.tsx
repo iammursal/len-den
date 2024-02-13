@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { HeroSection } from "./(common)/components/HeroSection";
 import { RecentTransactionsSection } from "./(common)/components/RecentTransactionsSection";
-import { UserMutateForm } from "@/modules/users/components/form";
 
 export const metadata: Metadata = {
   title: "Len Den",

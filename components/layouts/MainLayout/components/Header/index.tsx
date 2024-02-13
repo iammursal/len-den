@@ -1,21 +1,21 @@
 'use client'
 
+import { app } from '@/config/app'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState, type FC } from 'react'
-import { AiFillHome } from "react-icons/ai"
+import { AiFillHome } from 'react-icons/ai'
 import { FaUser } from 'react-icons/fa'
 import {
     GiPayMoney,
     GiReceiveMoney,
     GiTakeMyMoney,
 } from 'react-icons/gi'
-import { IoIosSettings } from "react-icons/io"
+import { IoIosSettings } from 'react-icons/io'
 import { RxHamburgerMenu } from 'react-icons/rx'
 
-
-interface HeaderProps {}
+type HeaderProps = {}
 
 const Header: FC<HeaderProps> = ({}) => {
 	const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -56,7 +56,10 @@ const Header: FC<HeaderProps> = ({}) => {
 
 	useEffect(() => {
 		if (window) {
-			let title = document.title.replace(' | Len Den', '')
+			let title = document.title.replace(
+				` | ${app.name}`,
+				''
+			)
 			setPageTitle(title)
 		}
 	}, [pathname])
@@ -104,9 +107,7 @@ const Header: FC<HeaderProps> = ({}) => {
 										className="flex items-center gap-2 py-4 text-sm text-gray-600 hover:text-gray-900
                                                 dark:text-gray-400 dark:hover:text-gray-200"
 									>
-										<span>
-											{link.icon}
-										</span>
+										<span>{link.icon}</span>
 										<span>{link.title}</span>
 									</div>
 								</Link>

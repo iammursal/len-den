@@ -1,1 +1,1 @@
-export * from './UserMutateForm'
+export * from './UserMutateForm.comp'
