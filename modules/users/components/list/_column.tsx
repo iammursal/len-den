@@ -1,7 +1,7 @@
-import { UserModel } from '@/modules/users/types'
+import { User } from '@/modules/users/types'
 import { ColumnDef } from '@tanstack/react-table'
 
-export const columns: ColumnDef<UserModel>[] = [
+export const columns: ColumnDef<User>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Name',

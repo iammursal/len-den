@@ -1,5 +1,5 @@
-export * from './useUserCreate.hook';
-export * from './useUserListQuery.hook';
-export * from './useUserRemove.hook';
-export * from './useUserUpdate.hook';
+export * from './useUserCreate';
+export * from './useUserListQuery';
+export * from './useUserRemove';
+export * from './useUserUpdate';
 

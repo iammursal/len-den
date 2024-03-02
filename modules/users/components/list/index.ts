@@ -1,3 +1,4 @@
 
-export * from './UserList.comp';
-export * from './ActionColumn.comp';
+export * from './ActionColumn';
+export * from './UserList';
+

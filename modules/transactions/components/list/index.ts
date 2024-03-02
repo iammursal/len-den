@@ -1,1 +1,2 @@
-export * from './TransactionList.comp'
+export * from './TransactionList';
+

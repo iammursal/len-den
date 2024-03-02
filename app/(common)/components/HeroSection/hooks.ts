@@ -1,29 +1,24 @@
-import { useRouter, useSearchParams } from 'next/navigation'
-import { stringify } from 'qs'
-import { z } from 'zod'
-import { FormSchema } from './schema'
+import useQueryFilter from '@/hooks/useQueryFilter/useQueryFilter'
+import { merge } from 'lodash-es'
+import { useContext } from 'react'
+import { TransactionFilterContext } from '../../context/TransactionFilterProvider'
 
-export const useHandleFormSubmit = () => {
-	const router = useRouter()
+export const useHeroSectionState = () => {
 
-	return (data: z.infer<typeof FormSchema>) => {
-        const keys =Object.keys(data) as (keyof z.infer<typeof FormSchema>)[]
-        keys?.forEach((x) => data[x] === 'null' && delete data[x]);
-		router.push('/?' + stringify(data))
-	}
-}
+    const { filters } = useContext(TransactionFilterContext)
+    const creditQuery = useQueryFilter('transactions', merge({}, filters, { where: { type: 'credit' }, sumsOf: ['amount'] }))
+    const debitQuery = useQueryFilter('transactions', merge({}, filters, { where: { type: 'debit' }, sumsOf: ['amount'] }))
 
-export const useHandleFormReset = (form: any) => {
-	const searchParams = useSearchParams()
-	const router = useRouter()
+    const totalCredit = creditQuery.data?.amount
+    const totalDebit = debitQuery.data?.amount
 
-	return () => {
-		form.reset()
-		const params = new URLSearchParams(searchParams)
-		params.delete('is_settled')
-		params.delete('data_from')
-		params.delete('data_to')
-		params.delete('user_id')
-		router.push('/?' + params.toString())
-	}
+    const isLoading = creditQuery.isLoading || debitQuery.isLoading
+    const error = creditQuery.error || debitQuery.error
+
+    const totalBalance =
+        typeof totalCredit === 'number' && typeof totalDebit === 'number'
+            ? totalCredit - totalDebit
+            : 0
+
+    return { totalCredit, totalDebit, totalBalance, isLoading, error }
 }

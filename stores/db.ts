@@ -1,14 +1,13 @@
 // db.ts
-import { TransactionModel } from '@/modules/transactions/types'
-import { UserModel } from '@/modules/users/types'
-import { TableWithTimestampsModel } from '@/types'
+import { Transaction } from '@/modules/transactions/types'
+import { User } from '@/modules/users/types'
 import Dexie, { Table } from 'dexie'
 
 export class MySubClassedDexie extends Dexie {
 	// 'transactions' is added by dexie when declaring the stores()
 	// We just tell the typing system this is the case
-	transactions!: Table<TransactionModel>
-	users!: Table<UserModel>
+	transactions!: Table<Transaction>
+	users!: Table<User>
 
 	constructor() {
 		// Pass the name of the database

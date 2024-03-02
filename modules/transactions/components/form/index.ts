@@ -1,1 +1,2 @@
-export * from './TransactionMutateForm.comp'
+export * from './TransactionMutateForm';
+
