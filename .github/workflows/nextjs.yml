@@ -31,6 +31,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v1
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -52,7 +54,7 @@ jobs:
           elif [ -f "${{ github.workspace }}/bun.lockb" ]; then
             echo "manager=bun" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=bun" >> $GITHUB_OUTPUT
+            echo "runner=bunx --frozen-lockfile" >> $GITHUB_OUTPUT
             exit 0
           else
             echo "Unable to determine package manager"
