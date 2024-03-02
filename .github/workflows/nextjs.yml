@@ -24,6 +24,10 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+    NEXT_PUBLIC_APP_NAME: 'Len_Den'
+    NEXT_PUBLIC_APP_URL: '//iammursal.github.io/len-den'
+
 jobs:
   # Build job
   build:
