@@ -46,7 +46,7 @@ export function HeroSection() {
                                 'text-success': totalBalance > 0,
                             })}
                         >
-                            {totalBalance.toFixed(2)}
+                            {totalBalance?.toFixed(2)}
                         </h2>
                     )}
                 </div>
@@ -71,14 +71,6 @@ export function HeroSection() {
                     </span>
                 </Link>
             </div>
-            {/* <div className="flex justify-center pt-4">
-				<button
-					className="m-4 text-center px-4 py-2 border-2 border-white"
-					onClick={() => clearAllTransaction()}
-				>
-					Clear Transactions
-				</button>
-			</div> */}
         </section>
     )
 }

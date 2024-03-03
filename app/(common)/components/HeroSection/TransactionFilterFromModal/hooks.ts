@@ -8,9 +8,11 @@ import { useContext, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { FormSchema } from './schema'
+import { merge } from 'lodash-es'
 
 export const useFilterForm = () => {
     const { filters, setFilters } = useContext(TransactionFilterContext)
+    console.log("🚀 ~ useFilterForm ~ filters:", filters)
 
     const defaultValues = {
         date_range:
@@ -30,6 +32,11 @@ export const useFilterForm = () => {
                     ? '1'
                     : '0'
                 : 'undefined',
+
+        amount_range: {
+            from: filters?.whereBetween?.amount?.[0] || '',
+            to: filters?.whereBetween?.amount?.[1] || '',
+        },
     } as z.infer<typeof FormSchema>
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -74,6 +81,17 @@ export const useFilterForm = () => {
                         user_id: value,
                     },
                 }
+            } else if (
+                key === 'amount_range' &&
+                typeof value === 'object' &&
+                typeof value?.from === 'number' &&
+                typeof value?.to === 'number'
+            ) {
+                filters = merge({}, filters, {
+                    whereBetween: {
+                        amount: [value.from, value.to],
+                    }
+                })
             } else if (
                 key === 'date_range' &&
                 typeof value === 'object' &&

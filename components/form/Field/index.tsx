@@ -11,39 +11,36 @@ import { FieldType } from './FieldType'
 import { FieldProps } from './types'
 
 const Field: FC<Omit<FieldProps, 'renderProps'>> = (props) => {
-	const {
-		label,
-		name,
-		type,
-		required,
-		options,
-		form,
-		isClearable = true,
-		placeholder = '',
-		...otherProps
-	} = props
-	const {
-		formState: { errors },
-	} = form
+    const {
+        name,
+        type,
+        required,
+        options,
+        form,
+        label = '',
+        isClearable = true,
+        placeholder = '',
+        ...otherProps
+    } = props
+    const {
+        formState: { errors },
+    } = form
 
-	return (
-		<FormField
-			control={form?.control}
-			render={(renderProps) => (
-				<FormItem>
-					<FormLabel className='d-block'>{label}</FormLabel>
+    return (
+        <FormField
+            control={form?.control}
+            render={(renderProps) => (
+                <FormItem>
+                    {label && <FormLabel className='d-block'>{label}</FormLabel>}
 
-					<FieldType renderProps={renderProps} {...props} />
+                    <FieldType renderProps={renderProps} {...props} />
 
-					<FormDescription className="text-destructive">
-						<ErrorMessage errors={errors} name={name} />
-					</FormDescription>
-					<FormMessage />
-				</FormItem>
-			)}
-			{...props}
-		/>
-	)
+                    <FormMessage />
+                </FormItem>
+            )}
+            {...props}
+        />
+    )
 }
 
 export default Field

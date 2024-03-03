@@ -13,7 +13,7 @@ import { z } from 'zod'
 
 const FormSchema = z.object({
     amount: z.coerce.number().min(0),
-    user_id: z.coerce.string(),
+    user_id: z.coerce.number().nonnegative(),
     transacted_at: z.string().optional(),
     notes: z.string().optional(),
     type: z.enum(['credit', 'debit']),
@@ -73,7 +73,8 @@ export function TransactionMutateForm({
                 <Field
                     form={form}
                     name="amount"
-                    type="number"
+                    type="text"
+                    inputMode='numeric'
                     label="Amount"
                     placeholder="Enter the amount you borrowed"
                     min={1}
