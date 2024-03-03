@@ -1,6 +1,7 @@
 'use client'
 
 import { TransactionList } from '@/modules/transactions/components/list'
+import { merge } from 'lodash-es'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { TransactionFilterContext } from '../../context/TransactionFilterProvider'
@@ -18,7 +19,11 @@ export function RecentTransactionsSection({ }) {
             </div>
             {/* list */}
             <div className="flex flex-col gap-y-4 divide-y divide-gray-500 ">
-                <TransactionList filters={filters} />
+                <TransactionList filters={merge({}, filters, {
+                    whereNotNull: [
+                        'deleted_at'
+                    ]
+                })} />
             </div>
         </section>
     )

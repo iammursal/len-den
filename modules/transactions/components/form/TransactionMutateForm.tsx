@@ -3,10 +3,13 @@
 import Field from '@/components/form/Field'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
+import useQueryFilter from '@/hooks/useQueryFilter/useQueryFilter'
 import { useTransactionCreate } from '@/modules/transactions/hooks'
-import { useUserListQuery } from '@/modules/users/hooks'
+import { Transaction } from '@/modules/transactions/types'
+import { User } from '@/modules/users/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -19,13 +22,19 @@ const FormSchema = z.object({
     type: z.enum(['credit', 'debit']),
 })
 
+const typeOptions = [
+    { label: 'Credit', value: 'credit' },
+    { label: 'Debit', value: 'debit' },
+]
+
 export function TransactionMutateForm({
-    type,
+    transaction,
 }: {
-    type: 'credit' | 'debit'
+    transaction?: Partial<Transaction>
 }) {
+    const { type } = transaction || { type: 'credit' }
     const router = useRouter()
-    const { data: users } = useUserListQuery()
+    const userQuery = useQueryFilter('users', {})
     const createTransaction = useTransactionCreate({
         onSuccess: () => {
             toast('Success', {
@@ -39,21 +48,24 @@ export function TransactionMutateForm({
             })
         },
     })
-
-    let usersOptions = users?.map((user) => {
+    let defaultValues = {
+        amount: undefined,
+        user_id: undefined,
+        transacted_at: new Date().toISOString().substr(0, 16),
+        notes: undefined,
+        type: 'credit',
+        ...transaction
+    }
+    let usersOptions = useMemo(() => userQuery?.data?.map((user: User) => {
         return { label: user.name, value: `${user.id}` }
-    })
+    }), [userQuery.isLoading])
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
-        defaultValues: {
-            amount: undefined,
-            user_id: undefined,
-            transacted_at: new Date().toISOString().substr(0, 16),
-            notes: undefined,
-            type,
-        },
+        // @ts-ignore
+        defaultValues,
     })
+
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         createTransaction.mutate({
@@ -78,6 +90,15 @@ export function TransactionMutateForm({
                     label="Amount"
                     placeholder="Enter the amount you borrowed"
                     min={1}
+                    required
+                />
+                <Field
+                    name="type"
+                    type="select"
+                    label="Type"
+                    placeholder="Select the transaction type"
+                    options={typeOptions}
+                    form={form}
                     required
                 />
                 <Field

@@ -31,6 +31,9 @@
 		--warning: 40 90% 50%;
 		--warning-foreground: 0 0% 22%;
 
+        --info: 210 90% 50%;
+        --info-foreground: 0 0% 98%;
+
 		--success: 150 70% 50%; /* Adjusted for more vibrancy */
 		--success-foreground: 0 0% 98%;
 

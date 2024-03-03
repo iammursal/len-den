@@ -58,14 +58,14 @@ export async function queryProcessor(
             // Apply whereNull filters
             if (query?.whereNull) {
                 query.whereNull.forEach((key) => {
-                    result = result.filter((i) => i[key] === '')
+                    result = result.filter((i) =>  i[key] === null || i[key] === '' || i[key] === undefined )
                 })
             }
 
             // Apply whereNotNull filters
             if (query?.whereNotNull) {
                 query.whereNotNull.forEach((key) => {
-                    result = result.filter((i) => i[key] !== '')
+                    result = result.filter((i) => !(i[key] !== '' && i[key] !== null && i[key] !== undefined))
                 })
             }
 

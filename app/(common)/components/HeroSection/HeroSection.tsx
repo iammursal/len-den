@@ -12,7 +12,7 @@ export function HeroSection() {
 
 
     return (
-        <section className="p-8 ">
+        <section className="py-8">
             {/* start:: Filters */}
             <TransactionFilterFromModal />
             {/* end:: Filters */}
@@ -53,7 +53,7 @@ export function HeroSection() {
             </div>
             <div className="grid grid-cols-2 font-bold gap-4 px-4 pt-16 text-center text-white">
                 <Link
-                    href="/borrow/create"
+                    href="/transactions/create?type=credit"
                     className="py-2 bg-destructive rounded-lg hover:bg-danger/95"
                 >
                     <span className="flex mx-auto gap-2 items-center justify-center">
@@ -62,7 +62,7 @@ export function HeroSection() {
                     </span>
                 </Link>
                 <Link
-                    href="/lend/create"
+                    href="/transactions/create?type=debit"
                     className="py-2 bg-success rounded-lg hover:bg-success/95"
                 >
                     <span className="flex gap-2  items-center justify-center">

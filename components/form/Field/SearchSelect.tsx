@@ -48,17 +48,21 @@ export const SearchSelect: FC<FieldProps> = (props) => {
                             !field.value && 'text-muted-foreground'
                         )}
                     >
-                        {typeof field.value !== 'undefined' && field.value != null ? (
+                        {typeof field.value === 'string' ? (
                             <div className="flex justify-between w-full items-center">
                                 <span>
                                     {
                                         options?.find(
-                                            (option) => option.value === field.value
+                                            (option) => {
+                                                console.log(option.value, field.value)
+                                                return option.value == field.value
+                                            }
                                         )?.label
                                     }
                                 </span>
-                                {isClearable && (
+                                {isClearable && !!field.value && (
                                     <Button
+                                        type='button'
                                         variant={'ghost'}
                                         size={'sm'}
                                         onClick={() => form.setValue(name, null)}
