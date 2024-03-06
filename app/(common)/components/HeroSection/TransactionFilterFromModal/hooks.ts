@@ -52,7 +52,11 @@ export const useFilterForm = () => {
     const onSubmit = (data: z.infer<typeof FormSchema>) => {
         if (data && Object.keys(data).length === 0) return
 
-        let filters = {} as QueryFilter
+        let filters = {
+            where: {
+                deleted_at: undefined
+            }
+        } as QueryFilter
         Object.keys(data)?.forEach((key: string) => {
             let value = data[key as keyof typeof data]
             if (

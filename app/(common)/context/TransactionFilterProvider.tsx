@@ -16,7 +16,6 @@ export const TransactionFilterContext =
 
 export const TransactionFilterProvider: FC<any> = ({ children }) => {
     const [filters, setFilters] = useState({} as QueryFilter)
-    console.log("🚀 ~ filters:", filters)
 
     const value = useMemo(() => {
         return { filters, setFilters }

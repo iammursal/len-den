@@ -3,11 +3,19 @@ import { merge } from 'lodash-es'
 import { useContext } from 'react'
 import { TransactionFilterContext } from '../../context/TransactionFilterProvider'
 
+const basicQuery = {
+    where: {
+        is_settled: true,
+        deleted_at: undefined
+    },
+    sumsOf: ['amount'],
+}
+
 export const useHeroSectionState = () => {
 
     const { filters } = useContext(TransactionFilterContext)
-    const creditQuery = useQueryFilter('transactions', merge({}, filters, { where: { type: 'credit' }, sumsOf: ['amount'] }))
-    const debitQuery = useQueryFilter('transactions', merge({}, filters, { where: { type: 'debit' }, sumsOf: ['amount'] }))
+    const creditQuery = useQueryFilter('transactions', merge(basicQuery, filters, { where: { type: 'credit' }, }))
+    const debitQuery = useQueryFilter('transactions', merge(basicQuery, filters, { where: { type: 'debit' }, }))
 
     const totalCredit = creditQuery.data?.amount
     const totalDebit = debitQuery.data?.amount

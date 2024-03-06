@@ -1,6 +1,5 @@
 'use client'
 
-
 import { ModeToggle } from '@/components/mode-toggle/ModeToggle'
 import { app } from '@/config/app'
 import clsx from 'clsx'
@@ -30,12 +29,12 @@ const Header: FC<HeaderProps> = ({ }) => {
             title: 'Home',
         },
         {
-            href: '/borrow/create',
+            href: '/transactions/create?type=debit',
             icon: <GiReceiveMoney className="w-6 h-6" />,
             title: 'Borrow',
         },
         {
-            href: '/lend/create',
+            href: '/transactions/create?type=credit',
             icon: <GiPayMoney className="w-6 h-6" />,
             title: 'Lend',
         },

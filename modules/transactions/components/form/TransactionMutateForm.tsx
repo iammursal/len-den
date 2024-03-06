@@ -50,12 +50,14 @@ export function TransactionMutateForm({
     })
     let defaultValues = {
         amount: undefined,
-        user_id: undefined,
+        user_id: `${transaction?.user_id}` || undefined,
         transacted_at: new Date().toISOString().substr(0, 16),
         notes: undefined,
         type: 'credit',
         ...transaction
     }
+    console.log(defaultValues,transaction);
+
     let usersOptions = useMemo(() => userQuery?.data?.map((user: User) => {
         return { label: user.name, value: `${user.id}` }
     }), [userQuery.isLoading])

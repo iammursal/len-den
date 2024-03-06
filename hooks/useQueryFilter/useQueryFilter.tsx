@@ -1,7 +1,7 @@
+import { useDeepCompareEffect } from '@/hooks/useDeepCompareEffect'
 import { db } from '@/stores/db'
 import { QueryFilter } from '@/types/queryFilter'
 import { queryProcessor } from '@/utils/queryProcessor'
-import { useDeepCompareEffect } from '@/hooks/useDeepCompareEffect'
 import { useState } from 'react'
 
 const useQueryFilter = (
@@ -12,26 +12,30 @@ const useQueryFilter = (
     const [error, setError] = useState<Error | null | undefined>(null)
     const [data, setData] = useState<any>(null)
 
-    useDeepCompareEffect(() => {
-        const fetchData = async () => {
-            try {
-                setIsLoading(true)
-                const filteredData = await queryProcessor(
-                    tableName,
-                    queryObject
-                )
-                setData(filteredData)
-            } catch (error: any) {
-                setError(error)
-            } finally {
-                setIsLoading(false)
-            }
+    let fetchData: (tableName: string, queryObject: QueryFilter | undefined) => Promise<void> = async () => {
+        try {
+            setIsLoading(true)
+            const filteredData = await queryProcessor(
+                tableName,
+                queryObject
+            )
+            setData(filteredData)
+        } catch (error: any) {
+            setError(error)
+        } finally {
+            setIsLoading(false)
         }
+    }
 
-        fetchData()
+    useDeepCompareEffect(() => {
+        fetchData(tableName, queryObject)
     }, [tableName, queryObject])
 
-    return { isLoading, error, data }
+    const refetch = () => {
+        fetchData(tableName, queryObject)
+    }
+
+    return { isLoading, error, data, refetch }
 }
 
 export default useQueryFilter

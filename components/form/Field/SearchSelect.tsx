@@ -36,6 +36,7 @@ export const SearchSelect: FC<FieldProps> = (props) => {
         ...otherProps
     } = props
     const { field, fieldState, formState } = renderProps
+
     return (
         <Popover>
             <PopoverTrigger asChild>
@@ -60,7 +61,7 @@ export const SearchSelect: FC<FieldProps> = (props) => {
                                         )?.label
                                     }
                                 </span>
-                                {isClearable && !!field.value && (
+                                {isClearable && field.value !== 'undefined' && (
                                     <Button
                                         type='button'
                                         variant={'ghost'}
