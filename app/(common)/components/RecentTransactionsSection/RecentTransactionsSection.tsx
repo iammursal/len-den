@@ -1,13 +1,27 @@
 'use client'
 
 import { TransactionList } from '@/modules/transactions/components/list'
+import { Transaction } from '@/modules/transactions/types'
 import { merge } from 'lodash-es'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { TransactionFilterContext } from '../../context/TransactionFilterProvider'
 
 export function RecentTransactionsSection({ }) {
-    const { filters } = useContext(TransactionFilterContext)
+    const { filters, setFilters } = useContext(TransactionFilterContext)
+    const recentTransactionFilters = merge({
+        where: {
+            // is_settled: false,
+        },
+        whereNull: ['deleted_at'],
+    }, filters)
+    const handleTransactionChange = (transaction: Transaction) => {
+        console.log('transaction', transaction)
+        setFilters(merge({
+            // @ts-ignore
+            refetch: !Boolean(!filters?.refetch),
+        }, filters))
+    }
 
     return (
         <section className="py-16 px-4">
@@ -19,11 +33,7 @@ export function RecentTransactionsSection({ }) {
             </div>
             {/* list */}
             <div className="flex flex-col gap-y-4 divide-y divide-gray-500 ">
-                <TransactionList filters={merge({}, filters, {
-                    whereNotNull: [
-                        'deleted_at'
-                    ]
-                })} />
+                <TransactionList filters={recentTransactionFilters} onChange={handleTransactionChange} />
             </div>
         </section>
     )

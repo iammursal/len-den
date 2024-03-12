@@ -15,8 +15,6 @@ export const FilterForm = () => {
     const amount_range = form.watch('amount_range')
     const arDefault = [amount_range?.from || 0, amount_range?.to || 100]
 
-    console.log("🚀 ~ FilterForm ~ amount_range:", amount_range)
-
     return (
         <Form {...form}>
             <form
@@ -80,7 +78,7 @@ export const FilterForm = () => {
                         />
                     </div>
                 </div>
-                <DialogTrigger className="w-full flex gap-4 pt-6">
+                <div className="w-full flex gap-4 pt-6">
                     <Button
                         type="submit"
                         variant="success"
@@ -96,7 +94,7 @@ export const FilterForm = () => {
                     >
                         Reset
                     </Button>
-                </DialogTrigger>
+                </div>
             </form>
         </Form>
     )

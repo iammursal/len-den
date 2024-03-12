@@ -6,6 +6,7 @@ export async function queryProcessor(
     query: QueryFilter | undefined
 ): Promise<any[] | number> {
     return new Promise(async (resolve, reject) => {
+        console.log('🚀 ~ file: queryProcessor.ts ~ line 10 ~ query', query)
         try {
             let t = db.table(tableName)
             // Apply where filters
@@ -15,21 +16,22 @@ export async function queryProcessor(
             }
             if (query?.where) {
                 Object.entries(query.where).forEach(([key, value]) => {
-                    result = result.filter((i) => i[key] === value)
+                    console.log(key, value)
+                    result = result.filter((i) => i?.[key] === value)
                 })
             }
 
             // Apply whereIn filters
             if (query?.whereIn) {
                 Object.entries(query.whereIn).forEach(([key, values]) => {
-                    result = result.filter((i) => values.includes(i[key]))
+                    result = result.filter((i) => values.includes(i?.[key]))
                 })
             }
 
             // Apply whereNotIn filters
             if (query?.whereNotIn) {
                 Object.entries(query.whereNotIn).forEach(([key, values]) => {
-                    result = result.filter((i) => !values.includes(i[key]))
+                    result = result.filter((i) => !values.includes(i?.[key]))
                 })
             }
 
@@ -38,7 +40,7 @@ export async function queryProcessor(
                 Object.entries(query.whereBetween).forEach(
                     ([key, [start, end]]) => {
                         result = result.filter(
-                            (i) => i[key] >= start && i[key] <= end
+                            (i) => i?.[key] >= start && i?.[key] <= end
                         )
                     }
                 )
@@ -49,7 +51,7 @@ export async function queryProcessor(
                 Object.entries(query.whereNotBetween).forEach(
                     ([key, [start, end]]) => {
                         result = result.filter(
-                            (i) => i[key] < start || i[key] > end
+                            (i) => i?.[key] >= start && i?.[key] <= end
                         )
                     }
                 )
@@ -58,14 +60,14 @@ export async function queryProcessor(
             // Apply whereNull filters
             if (query?.whereNull) {
                 query.whereNull.forEach((key) => {
-                    result = result.filter((i) =>  i[key] === null || i[key] === '' || i[key] === undefined )
+                    result = result.filter((i) => i?.[key] == null)
                 })
             }
 
             // Apply whereNotNull filters
             if (query?.whereNotNull) {
                 query.whereNotNull.forEach((key) => {
-                    result = result.filter((i) => !(i[key] !== '' && i[key] !== null && i[key] !== undefined))
+                    result = result.filter((i) => i?.[key] != null)
                 })
             }
 

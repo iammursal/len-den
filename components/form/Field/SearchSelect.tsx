@@ -55,7 +55,6 @@ export const SearchSelect: FC<FieldProps> = (props) => {
                                     {
                                         options?.find(
                                             (option) => {
-                                                console.log(option.value, field.value)
                                                 return option.value == field.value
                                             }
                                         )?.label

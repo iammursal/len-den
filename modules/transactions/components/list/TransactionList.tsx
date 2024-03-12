@@ -24,23 +24,29 @@ import { TransactionListItem } from './TransactionListItem'
 
 type TransactionListProps = {
     filters?: QueryFilter
+    onDelete?: (transaction: Transaction) => any
+    onSettle?: (transaction: Transaction) => any
+    onUnsettle?: (transaction: Transaction) => any
+    onChange?: (t: Transaction) => any
 }
 
 export const TransactionList: FC<TransactionListProps> = ({
     filters,
+    onDelete,
+    onSettle,
+    onUnsettle,
+    onChange,
 }) => {
-    const [drawerContent, setDrawerContent] = useState('') as any
+    const [drawerContent, setDrawerContent] = useState(null) as any
     const [handleCancel, setHandleCancel] = useState(() => { }) as any
-    const [handleConfirm, setHandleConfirm] = useState(() => { })
+    const [handleConfirm, setHandleConfirm] = useState(() => { }) as any
     const drawerTrigger = useRef(null)
     const router = useRouter()
 
     const { mutate, isLoading, error } = useTransactionUpdate({})
     const { data: transactions, ...transactionQuery } = useQueryFilter(
         'transactions',
-        {
-            ...filters,
-        }
+        filters,
     )
 
     const { data: users, ...userQuery } = useQueryFilter('users', {
@@ -66,34 +72,41 @@ export const TransactionList: FC<TransactionListProps> = ({
         setDrawerContent(description)
         setHandleCancel(() => onCancel)
         setHandleConfirm(() => onConfirm)
+        // @ts-ignore
         drawerTrigger?.current?.click()
         return
     }
 
-    const actions = ({ id, is_settled }: Transaction) => ({
+    const actions = (t: Transaction) => ({
         handleToggleSettle: () => {
-            console.log({ id, is_settled });
-
-            id && confirm(`Are you sure you want to ${is_settled ? 'unsettle' : 'settle'} this transaction?`, {
+            t?.id && confirm(`Are you sure you want to ${t?.is_settled ? 'unsettle' : 'settle'} this transaction?`, {
                 onConfirm: () => {
-                    mutate(id, { is_settled: !is_settled })
+                    t?.id && mutate(t.id, { is_settled: !t?.is_settled })
                     transactionQuery.refetch()
                     toast.success('Transaction Settled!')
+                    if (t?.is_settled) {
+                        onSettle && onSettle(t)
+                    } else {
+                        onUnsettle && onUnsettle(t)
+                    }
+                    onChange && onChange(t)
                 },
             })
         },
 
         handleDelete: () => {
-            id && confirm('Are you sure you want to delete this transaction?', {
+            t?.id && confirm('Are you sure you want to delete this transaction?', {
                 onConfirm: () => {
-                    mutate(id, { deleted_at: (new Date).toISOString() })
+                    t?.id && mutate(t.id, { deleted_at: (new Date).toISOString() })
                     transactionQuery.refetch()
                     toast.success('Transaction Deleted!')
+                    onDelete && onDelete(t)
+                    onChange && onChange(t)
                 },
             })
         },
         handleEdit: () => {
-            id && router.push(`/transactions/edit?id=${id}`)
+            t?.id && router.push(`/transactions/edit?id=${t?.id}`)
         }
     })
 
@@ -102,7 +115,7 @@ export const TransactionList: FC<TransactionListProps> = ({
     return (
         <>
             <Accordion type="single" collapsible>
-                {transactions &&
+                {transactions && transactions?.map &&
                     transactions?.map((t: Transaction) => (
                         <TransactionListItem
                             key={`${t.id}`}
