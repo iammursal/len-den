@@ -32,6 +32,9 @@ export const FieldType: FC<FieldProps> = (props) => {
 		case 'date-range':
 			return <DatePicker {...props} />
 
+        case 'date':
+            return <DatePicker {...props} />
+
 
 		case 'radio':
 			return <Radio {...props} />

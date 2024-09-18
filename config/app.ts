@@ -1,6 +1,6 @@
 export const app = {
-	name: 'Len Den',
+	name: 'Mint Pulse',
 	description:
-		'Len Den is the ultimate tool for tracking your personal finances related to your lending and borrowing activities.',
+		'Mint Pulse is the ultimate tool for tracking your personal finances related to your lending and borrowing activities.',
 	author: 'Mursal Akhtar Ansari',
 }

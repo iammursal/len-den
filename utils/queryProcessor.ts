@@ -6,7 +6,7 @@ export async function queryProcessor(
     query: QueryFilter | undefined
 ): Promise<any[] | number> {
     return new Promise(async (resolve, reject) => {
-        console.log('🚀 ~ file: queryProcessor.ts ~ line 10 ~ query', query)
+        // console.log('🚀 ~ file: queryProcessor.ts ~ line 10 ~ query', query)
         try {
             let t = db.table(tableName)
             // Apply where filters
@@ -16,7 +16,7 @@ export async function queryProcessor(
             }
             if (query?.where) {
                 Object.entries(query.where).forEach(([key, value]) => {
-                    console.log(key, value)
+                    // console.log(key, value)
                     result = result.filter((i) => i?.[key] === value)
                 })
             }

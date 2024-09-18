@@ -1,3 +1,1 @@
-export { HeroSection } from './HeroSection'
-export { RecentTransactionsSection } from './RecentTransactionsSection'
-
+export * from './ClientWrapper/ClientWrapper'

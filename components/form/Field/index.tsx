@@ -16,15 +16,14 @@ const Field: FC<Omit<FieldProps, 'renderProps'>> = (props) => {
         type,
         required,
         options,
-        form,
+        form = null,
         label = '',
         isClearable = true,
         placeholder = '',
         ...otherProps
     } = props
-    const {
-        formState: { errors },
-    } = form
+    // const { formState } = form || {}
+    // const { errors } = formState || {}
 
     return (
         <FormField
@@ -43,4 +42,4 @@ const Field: FC<Omit<FieldProps, 'renderProps'>> = (props) => {
     )
 }
 
-export default Field
+export { Field }

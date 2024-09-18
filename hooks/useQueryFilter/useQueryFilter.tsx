@@ -38,4 +38,4 @@ const useQueryFilter = (
     return { isLoading, error, data, refetch }
 }
 
-export default useQueryFilter
+export  {useQueryFilter}

@@ -3,7 +3,7 @@ const nextConfig = {
 	reactStrictMode: true,
     output: 'export',
     // Add basePath
-    basePath: '/len-den',
+    basePath: '/mint-pulse',
     // images: {
     //     unoptimized: true,
     // },
